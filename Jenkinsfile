@@ -1,11 +1,11 @@
 pipeline {
-  agent {
-    label "java"
+  agent none {
+    label "maven"
   }
   stages {
     stage('checkout-scm') {
       steps{
-        git branch: 'main', credentialsId: 'jenkins-github', url: 'https://github.com/wasimakram777/javawebapp.git'
+        git branch: 'main', url: 'https://github.com/devopsgagan/javawebapp.git'
       }}
     stage('Build') {
       steps{
