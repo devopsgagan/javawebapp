@@ -12,20 +12,17 @@ pipeline {
         sh 'mvn clean install'
       }
     }
-    stage('Test') {
-      parallel {
-        stage('Test1') {
+    stage('sonarqube') {
           steps{
-            sh 'echo "test case 1"'
+            script {
+              def scannerHome = tool 'SonarQube-Scanner';
+              withSonarQubeEnv('sonarqube-server') {
+                sh "${scannerHome}/bin/sonar-scanner"
+              }
+            }
           }
-        }
-        stage('Test2'){
-          steps{
-            sh 'echo "test case 2 "'
-          }
-        }
       }
-    }
+
     stage('Deploy') {
       steps{
         sh 'echo "Here we deploy the build"'
