@@ -68,11 +68,11 @@
    <distributionManagement>
     <snapshotRepository>
       <id>nexus-snapshots</id>
-      <url>https://agile.com/</url>
+      <url>http://54.89.184.200:8081/repository/javawebapp-nexus-repo/</url>
     </snapshotRepository>
     <repository>
       <id>nexus-releases</id>
-      <url>https://agile.com/</url>
+      <url>http://54.89.184.200:8081/repository/javawebapp-nexus-repo/</url>
     </repository>
   </distributionManagement>
 
