@@ -55,7 +55,7 @@ pipeline {
                     nexusUrl: '54.89.184.200:8081', // Update with your Nexus URL
                     groupId: 'com.maven',
                     version: '9.1.14',
-                    repository: 'javawebapp-nexus-repo',
+                    repository: 'java-web-',
                     credentialsId: "${nexus-creds}", // Update with your Nexus credentials ID
                     artifacts: [
                         [artifactId: 'SimpleWebApplication',
