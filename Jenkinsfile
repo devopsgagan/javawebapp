@@ -51,6 +51,7 @@ pipeline {
             steps {
                 nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: '*.war']], credentialsId: 'nexus-creds', groupId: 'com.maven', nexusUrl: '54.89.184.200:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'javawebapp-nexus-repo', version: '1.0.0-SNAPSHOT'
             }
+        }
     stage('Deploy') {
             steps{
                 sh 'echo "Here we deploy the build"'
