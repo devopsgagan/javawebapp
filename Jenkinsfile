@@ -47,23 +47,6 @@ pipeline {
                 } // End of timeout
             }
         }
-    stage('Deploy to Nexus') {
-            steps {
-                nexusArtifactUploader([
-                    nexusVersion: 'nexus3',
-                    protocol: 'http',
-                    nexusUrl: '54.89.184.200:8081', // Update with your Nexus URL
-                    groupId: 'com.maven',
-                    version: '9.1.14',
-                    repository: 'java-web-',
-                    credentialsId: "${nexus-creds}", // Update with your Nexus credentials ID
-                    artifacts: [
-                        [artifactId: 'SimpleWebApplication',
-                         file: 'target/SimpleWebApplication.war']
-                    ]
-                ])
-            }
-        }
     stage('Deploy') {
       steps{
         sh 'echo "Here we deploy the build"'
