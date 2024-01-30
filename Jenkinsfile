@@ -16,7 +16,7 @@ pipeline {
       steps {
         script {
             // Set the JDK to Java 8 using the 'tools' directive
-            def jdkHome = tool 'JDK8'
+            def jdkHome = tool 'java8'
             env.PATH = "${jdkHome}/bin:${env.PATH}"
 
             // Set the SonarQube scanner tool
