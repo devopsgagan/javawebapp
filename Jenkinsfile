@@ -49,7 +49,7 @@ pipeline {
         }
     stage('Deploy to Nexus') {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: '*.war']], credentialsId: 'nexus-creds', groupId: 'com.maven', nexusUrl: '54.89.184.200:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'javawebapp-nexus-repo', version: '1.0.0-SNAPSHOT'
+                nexusArtifactUploader artifacts: [[artifactId: 'SimpleWebApplication', classifier: '', file: 'target/SimpleWebApplication.war', type: '*.war']], credentialsId: 'nexus-creds', groupId: 'com.maven', nexusUrl: '172.31.85.80:8081/', nexusVersion: 'nexus3', protocol: 'http', repository: 'javawebapp-nexus-repo', version: '1.0.0-SNAPSHOT'
             }
         }
     stage('Deploy') {
