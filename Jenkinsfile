@@ -24,7 +24,8 @@ pipeline {
 
             // Execute SonarQube scanner with Java 8
             withSonarQubeEnv('sonarqube-server') {
-                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='demo' -Dsonar.projectName='demo' -Dsonar.projectVersion='1.0'"
+                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='demo' -Dsonar.projectName='demo' -Dsonar.projectVersion='1.0' -Dsonar.java.binaries='target/classes'
+"
             }
         }
     }
