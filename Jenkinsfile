@@ -16,7 +16,7 @@ pipeline {
       steps {
         script {
             // Set the JDK to Java 8 using the 'tools' directive
-            def jdkHome = tool 'java8'
+            def jdkHome = tool 'JDK8'
             env.PATH = "${jdkHome}/bin:${env.PATH}"
 
             // Set the SonarQube scanner tool
@@ -24,12 +24,18 @@ pipeline {
 
             // Execute SonarQube scanner with Java 8
             withSonarQubeEnv('sonarqube-server') {
-                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey='demo' -Dsonar.projectName='demo' -Dsonar.projectVersion='1.0' -Dsonar.java.binaries='target/classes'
-"
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey='demo' \
+                    -Dsonar.projectName='demo' \
+                    -Dsonar.projectVersion='1.0' \
+                    -Dsonar.java.binaries='target/classes'
+                """.stripIndent()
             }
         }
     }
 }
+
 
     stage('Deploy') {
       steps{
