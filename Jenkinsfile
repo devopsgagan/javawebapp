@@ -47,7 +47,6 @@ pipeline {
                 } // End of timeout
             }
         }
-    }
 
     stage('Deploy') {
       steps{
