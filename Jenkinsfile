@@ -59,7 +59,6 @@ pipeline {
                     credentialsId: "${nexus-creds-2}", // Update with your Nexus credentials ID
                     artifacts: [
                         [artifactId: 'SimpleWebApplication',
-                         classifier: '',
                          file: 'target/SimpleWebApplication.war',
                          type: 'war']
                     ]
