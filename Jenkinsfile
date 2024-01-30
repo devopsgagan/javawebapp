@@ -56,11 +56,10 @@ pipeline {
                     groupId: 'com.maven',
                     version: '9.1.14',
                     repository: 'javawebapp-nexus-repo',
-                    credentialsId: "${nexus-creds-2}", // Update with your Nexus credentials ID
+                    credentialsId: "${nexus-creds}", // Update with your Nexus credentials ID
                     artifacts: [
                         [artifactId: 'SimpleWebApplication',
-                         file: 'target/SimpleWebApplication.war',
-                         type: 'war']
+                         file: 'target/SimpleWebApplication.war']
                     ]
                 ])
             }
