@@ -52,7 +52,7 @@ pipeline {
                 nexusArtifactUploader([
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: '54.89.184.200:8081/', // Update with your Nexus URL
+                    nexusUrl: '54.89.184.200:8081', // Update with your Nexus URL
                     groupId: 'com.maven',
                     version: '9.1.14',
                     repository: 'javawebapp-nexus-repo',
