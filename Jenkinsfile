@@ -72,10 +72,10 @@ pipeline {
                 echo "Existing WAR file moved to ${tmpFolder}/"
             }
           sh '''
-            sh "{tomcatWebappsPath}/bin/shutdown.sh"  
+            sh "/opt/tomcat/bin/shutdown.sh"  
             // Copy the new WAR file to Tomcat
             sh "cp target/${warFileName} ${tomcatWebappsPath}/"
-            sh "{tomcatWebappsPath}/bin/startup.sh" 
+            sh "/opt/tomcat/bin/startup.sh" 
           '''
         }
       }
