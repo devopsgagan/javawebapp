@@ -65,8 +65,7 @@ pipeline {
             def existingWarPath = sh(
                 script: "[ -e ${tomcatWebappsPath}/${warFileName} ] && echo 'true' || echo 'false'",
                 returnStatus: true
-            ).trim()
-
+            )
             if (existingWarPath == 'true') {
                 // Move existing WAR file to tmp folder
                 sh "mv ${tomcatWebappsPath}/${warFileName} ${tmpFolder}/"
