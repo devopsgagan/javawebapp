@@ -72,11 +72,10 @@ pipeline {
                 echo "Existing WAR file moved to ${tmpFolder}/"
             }
           sh '''
-            sudo systemctl stop tomcat 
+            sh "{tomcatWebappsPath}/bin/shutdown.sh"  
             // Copy the new WAR file to Tomcat
             sh "cp target/${warFileName} ${tomcatWebappsPath}/"
-            sudo systemctl start tomcat 
-            
+            sh "{tomcatWebappsPath}/bin/startup.sh" 
           '''
         }
       }
