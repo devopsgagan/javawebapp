@@ -62,7 +62,7 @@ pipeline {
           def warFileName = 'SimpleWebApplication.war'
           def tmpFolder = '/tmp'
           // Check if the existing WAR file is present
-          def existingWarPath = sh(script: "ls ${tomcatWebappsPath}/${warFileName}", returnStdout: true).trim()
+          def existingWarPath = sh(script: "ls ${tomcatWebappsPath}/${warFileName}", returnStatus: true)
           if (existingWarPath) {
             // Move existing WAR file to tmp folder
             sh "mv ${tomcatWebappsPath}/${warFileName} ${tmpFolder}/"
