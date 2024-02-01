@@ -53,8 +53,29 @@ pipeline {
             }
         }
     stage('Deploy') {
-            steps{
-                sh 'echo "Here we deploy the build"'
+      agent {
+        label "tomcat"
+      }
+      steps{
+        script {
+          def tomcatWebappsPath = '/opt/tomcat/webapps'
+          def warFileName = 'SimpleWebApplication.war'
+          def tmpFolder = '/tmp'
+          // Check if the existing WAR file is present
+          def existingWarPath = sh(script: "ls ${tomcatWebappsPath}/${warFileName}", returnStdout: true).trim()
+          if (existingWarPath) {
+            // Move existing WAR file to tmp folder
+            sh "mv ${tomcatWebappsPath}/${warFileName} ${tmpFolder}/"
+            echo "Existing WAR file moved to ${tmpFolder}/"
+          }
+          sh '''
+            systemctl stop tomcat 
+            // Copy the new WAR file to Tomcat
+            sh "cp target/${warFileName} ${tomcatWebappsPath}/"
+            systemctl start tomcat 
+            
+          '''
+        }
       }
     }
   }
