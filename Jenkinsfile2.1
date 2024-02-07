@@ -1,0 +1,53 @@
+pipeline {
+    agent {
+        label "tomcat"
+    }
+    stages {
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    def nexusUrl = 'http://172.31.85.80:8081'
+                    def repository = 'javawebapp-nexus-repo'
+                    def groupId = 'com.maven'
+                    def artifactId = 'SimpleWebApplication'
+
+                    // Retrieve all artifact URLs
+                    def artifactUrls = sh(script: "curl -s '${nexusUrl}/service/rest/v1/search/assets?repository=${repository}&group=${groupId}&name=${artifactId}' | jq -r '.items | sort_by(.created) | reverse | .[] | select(.format == \"maven2\") | .downloadUrl'", returnStdout: true).trim().readLines()
+
+                    // Filter out checksum files
+                    def warArtifactUrls = artifactUrls.findAll { url -> url.endsWith('.war') && !url.endsWith('.war.sha1') && !url.endsWith('.war.md5') }
+
+                    // Select the latest artifact URL
+                    def latestArtifactUrl = warArtifactUrls[0]
+                    echo "Latest Artifact URL: ${latestArtifactUrl}"
+
+                    // Extract the version from the latest artifact URL
+                    def latestArtifactVersion = latestArtifactUrl =~ /\/${artifactId}-(.+?)\.war/
+                    if (latestArtifactVersion) {
+                        latestArtifactVersion = latestArtifactVersion[0][1]
+                        echo "Latest Artifact Version: ${latestArtifactVersion}"
+                    } else {
+                        error "Failed to extract the latest artifact version"
+                    }
+
+                    def latestArtifactFile = "${artifactId}-${latestArtifactVersion}.war"
+                    def tomcatPath = "/opt/tomcat"
+                    def jenkinsHome = "/home/jenkins"
+                    
+                    sh "${tomcatPath}/bin/shutdown.sh"
+
+                    sh "sudo rm -rf ${tomcatPath}/webapps/SimpleWebApplication*"
+                    sh "sudo rm -rf ${jenkinsHome}/workspace/${JOB_NAME}/SimpleWebApplication*"
+
+                    // Download the latest artifact from Nexus
+                    sh "curl -o ${latestArtifactFile} ${latestArtifactUrl}"
+
+                    // Deploy the artifact to Tomcat server
+                    sh "mv ${latestArtifactFile} ${tomcatPath}/webapps/"
+
+                    sh "${tomcatPath}/bin/startup.sh"
+                }
+            }
+        }
+    }
+}
